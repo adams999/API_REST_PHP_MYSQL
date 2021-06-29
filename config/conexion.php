@@ -3,6 +3,7 @@
 class Conectar
 {
     protected $dbh;
+    protected $response;
 
     protected function Conexion()
     {
@@ -28,17 +29,19 @@ class Conectar
 
     public function sqlDinamyc($sql, $id_table = null)
     {
+        global $response;
         $errores = new Errors();
         $cn = $this->Conexion();
         $consulta = $cn->prepare($sql);
         /////!empty($id_table) ? $id_afectado = $consulta->bindValue(1, $id_table) : $id_afectado = null;   ///obtener el id afectado
         $consulta->execute();
-        $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        $response = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-        if (empty($resultado)) {
-            return $errores->trans_errors(['0004' => true]);
+        if (empty($response)) {
+            $response = $errores->trans_errors(['0004' => true]);
+            return $response;
         }
-
-        return json_encode($resultado);
+        $response = json_encode($response);
+        return $response;
     }
 }

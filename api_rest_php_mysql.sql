@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2021 a las 02:50:40
+-- Tiempo de generación: 29-06-2021 a las 06:49:57
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -34,19 +34,21 @@ CREATE TABLE `categoria` (
   `cat_est` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `categoria`
+-- Estructura de tabla para la tabla `trans_all_api`
 --
 
-INSERT INTO `categoria` (`cat_id`, `cat_nom`, `cat_obs`, `cat_est`) VALUES
-(1, 'televisor', 'televisores dev', 0),
-(2, 'dev', 'Ramirez Contreras', 1),
-(3, 'carros', 'carros dev', 0),
-(4, 'lavadoras', 'lavadoras dev', 1),
-(5, 'Adams', 'Developer', 1),
-(6, 'Omaira', 'Ramirez', 1),
-(7, 'Juhantonny', 'Ramirez Contreras', 1),
-(8, 'julian', 'contreras', 1);
+CREATE TABLE `trans_all_api` (
+  `trans_id` int(11) NOT NULL,
+  `trans_body` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
+  `trans_resp` text COLLATE utf8_spanish_ci NOT NULL,
+  `trans_ip` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `trans_func` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `trans_uri` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `trans_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -62,17 +64,6 @@ CREATE TABLE `trans_errors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `trans_errors`
---
-
-INSERT INTO `trans_errors` (`trans_err_id`, `trans_err_code`, `trans_err_desc_eng`, `trans_err_desc_spa`) VALUES
-(1, '0001', 'Id_Empty', 'Id_Vacio'),
-(2, '0002', 'Name_Empty', 'Nombre_Vacio'),
-(3, '0003', 'Description_Empty', 'Descripcion_Vacia'),
-(4, '0004', 'Not_Data', 'Sin_Registros'),
-(5, '0005', 'Method_Not_Soported', 'Metodo_No_Soportado');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -81,6 +72,14 @@ INSERT INTO `trans_errors` (`trans_err_id`, `trans_err_code`, `trans_err_desc_en
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`cat_id`);
+
+--
+-- Indices de la tabla `trans_all_api`
+--
+ALTER TABLE `trans_all_api`
+  ADD PRIMARY KEY (`trans_id`),
+  ADD KEY `trans_func` (`trans_func`),
+  ADD KEY `trans_date` (`trans_date`);
 
 --
 -- Indices de la tabla `trans_errors`
@@ -97,13 +96,19 @@ ALTER TABLE `trans_errors`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `trans_all_api`
+--
+ALTER TABLE `trans_all_api`
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `trans_errors`
 --
 ALTER TABLE `trans_errors`
-  MODIFY `trans_err_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `trans_err_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
