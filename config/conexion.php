@@ -3,7 +3,6 @@
 class Conectar
 {
     protected $dbh;
-    protected $response;
 
     protected function Conexion()
     {
@@ -29,7 +28,6 @@ class Conectar
 
     public function sqlDinamyc($sql, $id_table = null)
     {
-        global $response;
         $errores = new Errors();
         $cn = $this->Conexion();
         $consulta = $cn->prepare($sql);
